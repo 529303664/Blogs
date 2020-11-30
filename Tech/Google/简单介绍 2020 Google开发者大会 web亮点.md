@@ -230,6 +230,14 @@ Platform | LCP | FID | CLS
 # TensorFlow.js
 ### 来分享一个有意思的场景
 
+#### [交互式《蒙娜丽莎》画像](https://blog.tensorflow.org/2020/09/bringing-mona-lisa-effect-to-life-tensorflow-js.html)
+
+>传说中，不管你从哪个角度看《蒙娜丽莎》画像，都会感到画像中的女子在看着你。TensorFlow 的官方博客，演示怎么用 TensorFlow.js，制作一个交互式的《蒙娜丽莎》画像，摄像头捕捉观看者的角度，然后自动改变画像的眼神。
+
+![image](https://www.wangbase.com/blogimg/asset/202009/bg2020092603.jpg)
+![image](https://www.wangbase.com/blogimg/asset/202009/bg2020092604.jpg)
+
+
 #### 利用TensorFlow Privacy 检查隐私保护措施
 ![image](https://user-images.githubusercontent.com/5030910/100418941-851b2400-30be-11eb-98cf-af0d5dbb1a5f.png)
 ![image](https://user-images.githubusercontent.com/5030910/100419020-a3811f80-30be-11eb-9237-c33f9de6b58a.png)

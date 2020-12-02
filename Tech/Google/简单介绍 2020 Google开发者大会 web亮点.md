@@ -31,6 +31,32 @@ UA-Platform-Version | Sec-CH-UA-Platform-Version | "10" | The version for the pl
 UA-Arch | Sec-CH-UA-Arch | "ARM64" | The underlying architecture for the device. While this may not be relevant to displaying the page, the site may want to offer a download which defaults to the right format.
 UA-Model | Sec-CH-UA-Model | "Pixel 3" | The device model.
 
+### JavaScript API
+Alongside the headers, the User-Agent can also be accessed in JavaScript via navigator.userAgentData. The default Sec-CH-UA and Sec-CH-UA-Mobile header information can be accessed via the brands and mobile properties, respectively:
+
+```JavaScript
+// Log the brand data
+console.log(navigator.userAgentData.brands);
+
+// output
+[
+  {
+    brand: 'Chromium',
+    version: '84',
+  },
+  {
+    brand: 'Google Chrome',
+    version: '84',
+  },
+];
+
+// Log the mobile indicator
+console.log(navigator.userAgentData.mobile);
+
+// output
+false;
+```
+
 ### [查看更多信息](https://web.dev/user-agent-client-hints/)
 
 # CSS布局

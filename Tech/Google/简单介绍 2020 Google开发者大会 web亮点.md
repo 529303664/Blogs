@@ -9,8 +9,8 @@
 - `None`允许跨站请求，前提是必须同时设置Secure属性（Cookie 只能通过 HTTPS 协议发送），否则无效
 
 
-HTTP → HTTPS | HTTPS → HTTP
--- | --
+sameSite | HTTP → HTTPS | HTTPS → HTTP
+-- | -- | --
 SameSite=Strict | ⛔ Blocked | ⛔ Blocked
 SameSite=Lax | ✓ Allowed | ✓ Allowed
 SameSite=None;Secure | ✓ Allowed | ⛔ Blocked

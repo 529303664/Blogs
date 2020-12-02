@@ -62,8 +62,6 @@ false;
 # CSS布局
 > 介绍了一些grid新特性
 
-### 优化运营后台页面，自适应布局
-
 ### 强居中
 <img src="https://user-images.githubusercontent.com/5030910/100298195-71db5c00-2fcb-11eb-89a2-f4e5ed8a4e8d.png"  align=center />
 
@@ -74,6 +72,8 @@ false;
 <img src="https://user-images.githubusercontent.com/5030910/100298312-c8e13100-2fcb-11eb-8631-d0aba105fa86.png"  align=center />
 
 ### [查看更多实例](http://1linelayouts.glitch.me/)
+
+### 思考：优化运营后台页面，自适应布局？
 
 
 # 搜索（高级SEO）

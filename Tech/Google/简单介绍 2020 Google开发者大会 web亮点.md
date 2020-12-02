@@ -1,6 +1,6 @@
 # 网络
 ###  sameSite
->浏览器的 Cookie 新增加了一个SameSite属性，用来防止 CSRF 攻击和用户追踪，分为Strict ，Lax，None
+>Chrome 51 开始，浏览器的 Cookie 新增加了一个SameSite属性，用来防止 CSRF 攻击和用户追踪，分为Strict ，Lax，None
 
 - `Strict`最为严格，完全禁止第三方 Cookie，跨站点时，任何情况下都不会发送 Cookie。换言之，只有当前网页的 URL 与请求目标一致，才会带上 Cookie
 **这个规则过于严格，可能造成非常不好的用户体验。比如，当前网页有一个 GitHub 链接，用户点击跳转就不会带有 GitHub 的 Cookie，跳转过去总是未登陆状态**

@@ -1,0 +1,19 @@
+apiVersion: apps/v1 # 必须字段 for versions before 1.9.0 use apps/v1beta2
+kind: Deployment # 必须字段
+metadata: # 必须字段 帮助唯一性标识对象的一些数据，包括一个 name 字符串、UID 和可选的 namespace
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx # 应用测试标签
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata: #元数据标识是属于哪个标签的模板
+      labels:
+        app: nginx
+    spec: #对象规约
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80  #容器应用程序端口

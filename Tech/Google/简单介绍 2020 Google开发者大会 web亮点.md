@@ -15,7 +15,7 @@ SameSite=Strict | ⛔ Blocked | ⛔ Blocked
 SameSite=Lax | ✓ Allowed | ✓ Allowed
 SameSite=None;Secure | ✓ Allowed | ⛔ Blocked
 
-### [查看更多信息](https://web.dev/schemeful-samesite/)
+#### [查看更多信息](https://web.dev/schemeful-samesite/)
 
 ### User-Agent Client Hints(UA-CH)
 >从Chrome 85开始，正式发布
@@ -57,7 +57,7 @@ console.log(navigator.userAgentData.mobile);
 false;
 ```
 
-### [查看更多信息](https://web.dev/user-agent-client-hints/)
+#### [查看更多信息](https://web.dev/user-agent-client-hints/)
 
 # CSS布局
 > 介绍了一些grid新特性

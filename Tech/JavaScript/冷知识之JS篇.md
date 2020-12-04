@@ -32,6 +32,14 @@ function generateRandomAlphaNum(len) {
 
 ![image](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fc619cda77ec4dd0815f1b5c94fa23a0~tplv-k3u1fbpfcp-zoom-1.image)
 
+## copy
+
+利用copy方法复制Console控制台的变量
+
+```js
+var temp1 = 1111;
+copy(temp1);
+```
 
 ## console.table
 

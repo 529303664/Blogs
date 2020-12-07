@@ -460,13 +460,13 @@ setTimeout(() => {
 
 从入口文件开始，并通过代码解析（module specifiers）找到入口文件所依赖的模块，一步一步找到其他模块，并将所有模块解析成模块记录（module record），并缓存到**module map**中，遇到不同文件获取相同依赖，都会直接在**module map**缓存中获取，注意这里并不是要把所有模块的依赖关系全部解析完再开始下一步，因为浏览器一次性下载这么多文件会跟CommonJS一样阻塞主线程。所以这也就是为什么**ESM spec**要把3个加载过程区分开执行的原因。
 
-[![module_record](https://github.com/Nomadcheng/resources/blob/master/blog/img/module_record.png?raw=true)](https://github.com/Nomadcheng/resources/blob/master/blog/img/module_record.png?raw=true)
+![image](./module_record.png)
 
 > 实例化（Instantiation）
 
 实例化的过程就是将代码导出的变量一一指向内存。JS引擎通过**优先深度后序遍历**遍历整个模块关系图，即从依赖关系的最后一个模块（没有引入其他模块）开始实例化，并将所有模块导出的变量绑定在内存上，然后再将**所有模块导入变量绑定到与导出变量同一个内存区域**。所以一旦导出值发生变化，导入值也会变化。这也是ESM导出的是**值引用**的原理。同样也**解决了循环调用**的问题，为什么CommonJS无法解决循环调用的详细解释请查看[图解ES Modules](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/)
 
-[![modules_bindings](https://github.com/Nomadcheng/resources/blob/master/blog/img/module_bindings.png?raw=true)](https://github.com/Nomadcheng/resources/blob/master/blog/img/module_bindings.png?raw=true)
+![image](./module_bindings.png)
 
 > 求值（Evaluation）
 

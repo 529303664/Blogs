@@ -1,4 +1,5 @@
 ### [原文链接](https://hackernoon.com/how-libuv-thread-pool-can-boost-your-node-js-performance-bel3tyf)
+
 ### Libuv线程池
 Libuv启动一个包含4个线程的线程池，用于将同步操作卸载到该线程池。为此，Libuv确保同步任务不会不必要地阻止我们的应用程序。
 
@@ -11,7 +12,8 @@ Libuv启动一个包含4个线程的线程池，用于将同步操作卸载到�
 但是，这些内核具有超线程，这意味着每个内核可以同时运行2个操作。因此，我们将具有超线程的1个物理核心视为2个逻辑核心。就我而言，我的MacBook Pro运行12个逻辑核心。
 
 ### 如何提高Node JS性能
-建议将`UV_THREADPOOL_SIZE`设置为计算机正在运行的逻辑核心数。就我而言，我将线程池大小设置为12。
+
+建议将 `UV_THREADPOOL_SIZE` 设置为计算机正在运行的逻辑核心数。就我而言，我将线程池大小设置为12。
 
 将大小设置为除硬件正在运行的逻辑内核之外的任何值都没有意义，实际上可能会导致性能降低。
 
@@ -21,7 +23,7 @@ Libuv启动一个包含4个线程的线程池，用于将同步操作卸载到�
 
 好消息是，这很简单，但必须谨慎对待。为此，请将以下代码添加到Node应用程序的根JS文件的顶部：
 
-```JavaScript
+``` JavaScript
 const OS = require('os')
 process.env.UV_THREADPOOL_SIZE = OS.cpus().length
 ```

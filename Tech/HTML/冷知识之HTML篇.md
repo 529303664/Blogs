@@ -1,27 +1,22 @@
-# HTML篇冷知识
-
-## 浏览器秒变编辑器
+### 浏览器秒变编辑器
 
 这个还是在浏览器地址栏上面做文章，将以下代码复制粘贴到浏览器地址栏，运行后浏览器就变成了一个原始简单的编辑器，和window自带的notepad差不多，长见识了吧，话不多说，我们来试试。
 
-```JavaScript
-data:text/html, <html contenteditable>
+``` JavaScript
+data: text / html, < html contenteditable >
 ```
 
-![image](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/efdc16760d544a9c8234fdb882876185~tplv-k3u1fbpfcp-zoom-1.image)
+![image](./冷知识之HTML篇-01.png)
 
-
->归根结底多亏了HTML5中新加的contenteditable属性，当元素指定了该属性后，元素的内容成为可编辑状态。
+> 归根结底多亏了HTML5中新加的contenteditable属性，当元素指定了该属性后，元素的内容成为可编辑状态。
 
 同理，在控制台执行以下代码，同样可以将整个页面变得可以编辑。
 
->document.body.contentEditable='true';
+> document.body.contentEditable='true'; 
 
+![image](./冷知识之HTML篇-02.png)
 
-![image](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/38a1097783444b28b86bc057a7e02d6d~tplv-k3u1fbpfcp-zoom-1.image)
-
-
-## 实时编写样式的输入框
+### 实时编写样式的输入框
 
 <br>
 
@@ -29,23 +24,25 @@ data:text/html, <html contenteditable>
 
 <br>
 
-```html
+``` html
 <body>
   <style style="display:block; position: fixed;" contentEditable>
-    body { background: red; }
+    body {
+      background: red;
+    }
   </style>
 </body>
 ```
 
-![image](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d7d241fac11640f4a30717fd86c0f550~tplv-k3u1fbpfcp-zoom-1.image)
+![image](冷知识之HTML篇-03.png)
 
 <br>
 
-## 利用a标签解析url
+### 利用a标签解析url
 
 <br>
 
-很多时候我们有从一个URL中提取域名，查询关键字，变量参数值等的需要,然而处理 url 字符串是比较麻烦的，可以使用 a 标签自动解析 url。
+很多时候我们有从一个URL中提取域名，查询关键字，变量参数值等的需要, 然而处理 url 字符串是比较麻烦的，可以使用 a 标签自动解析 url。
 
 <br>
 
@@ -53,7 +50,7 @@ data:text/html, <html contenteditable>
 
 <br>
 
-```javascript
+``` javascript
 var a = document.createElement('a');
 a.href = 'https://juejin.cn/user/2796746682939054/posts';
 console.log(a.host);
@@ -61,13 +58,13 @@ console.log(a.host);
 
 <br>
 
-![image](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/da7ac2aeea754566838469d6f0f39284~tplv-k3u1fbpfcp-zoom-1.image)
+![image](冷知识之HTML篇-04.png)
 
 <br>
 
 利用这一方法，稍微进行封装一下，就可以得到一个非常实用的工具函数了，下面提供一个网上常见的封装示例。
 
-```javascript
+``` javascript
 function urlParse(url, key) {
   var a = document.createElement('a')
   a.href = url
@@ -76,11 +73,14 @@ function urlParse(url, key) {
     protocol: a.protocol.replace(':', ''),
     port: a.port,
     query: a.search,
-    params: (function(){
-      var ret = {}, centArr,
-        seg = a.search.replace(/^\?/, '').replace(/^\?/,'').split('&')
-      for (i = 0, len = seg.length; i < len; i ++) {
-        if (!seg[i]) { continue }
+    params: (function() {
+      var ret = {},
+        centArr,
+        seg = a.search.replace(/^\?/, '').replace(/^\?/, '').split('&')
+      for (i = 0, len = seg.length; i < len; i++) {
+        if (!seg[i]) {
+          continue
+        }
         centArr = seg[i].split('=')
         ret[centArr[0]] = centArr[1]
       }
@@ -99,15 +99,12 @@ function urlParse(url, key) {
 
 <br>
 
->H5 有新的 API URL 也可以快速的处理一个链接
+> H5 有新的 API URL 也可以快速的处理一个链接
 
 <br>
 
-```JavaScript
+``` JavaScript
 var url = new URL('https://www.baidu.com/')
 url.hash
-...
+  ...
 ```
-
-<br>
-

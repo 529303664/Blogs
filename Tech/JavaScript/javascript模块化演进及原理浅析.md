@@ -460,7 +460,7 @@ setTimeout(() => {
 
 从入口文件开始，并通过代码解析（module specifiers）找到入口文件所依赖的模块，一步一步找到其他模块，并将所有模块解析成模块记录（module record），并缓存到**module map**中，遇到不同文件获取相同依赖，都会直接在**module map**缓存中获取，注意这里并不是要把所有模块的依赖关系全部解析完再开始下一步，因为浏览器一次性下载这么多文件会跟CommonJS一样阻塞主线程。所以这也就是为什么**ESM spec**要把3个加载过程区分开执行的原因。
 
-[![module_record](https://github.com/Nomadcheng/resources/blob/master/blog/img/module_record.png?raw=true)](https://github.com/Nomadcheng/resources/blob/master/blog/img/module_record.png?raw=true)
+
 
 > 实例化（Instantiation）
 

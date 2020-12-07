@@ -28,7 +28,7 @@ function generateRandomAlphaNum(len) {
 
 >主要是利用了toString() 方法的特性
 
-![image](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fc619cda77ec4dd0815f1b5c94fa23a0~tplv-k3u1fbpfcp-zoom-1.image)
+![image](./toString.png)
 
 ### copy
 
@@ -49,4 +49,4 @@ var data = [{'品名': '杜雷斯', '数量': 4}, {'品名': '冈本', '数量':
 console.table(data);
 ```
 
-![image](https://images0.cnblogs.com/blog/431064/201404/101915232787860.png)
+![image](./console.table.png)

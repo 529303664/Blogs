@@ -1,6 +1,4 @@
-# 冷知识之JS篇
-
-## 浮点数快速向下取整
+### 浮点数快速向下取整
 
 JavaScript中是没有整型概念的，但利用好位操作符可以轻松处理，同时获得效率上的提升。
 
@@ -16,7 +14,7 @@ JavaScript中是没有整型概念的，但利用好位操作符可以轻松处�
 // => 3
 ```
 
-## 生成随机字符串
+### 生成随机字符串
 生成随机字符串，我们第一想到的，可能是先定义一个字符串数组，然后通过随机取数组中的字符进而拼接成一个随机长度的字符串。
 但是下面还有一个更简单的方法，代码如下：
 ```js
@@ -32,7 +30,7 @@ function generateRandomAlphaNum(len) {
 
 ![image](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fc619cda77ec4dd0815f1b5c94fa23a0~tplv-k3u1fbpfcp-zoom-1.image)
 
-## copy
+### copy
 
 利用copy方法复制Console控制台的变量
 
@@ -41,7 +39,7 @@ var temp1 = 1111;
 copy(temp1);
 ```
 
-## console.table
+### console.table
 
 Chrome专属，IE绕道的console方法。可以将JavaScript关联数组以表格形式输出到浏览器console，效果很惊赞，界面很美观。
 

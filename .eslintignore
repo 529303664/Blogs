@@ -1,0 +1,14 @@
+.vscode/
+coverage/
+
+private/
+run/
+public/
+node_modules/
+app/mocks
+plugins/
+app/view/
+test.js
+test/fixtures
+test/benchmark
+test/client

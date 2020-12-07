@@ -1,0 +1,59 @@
+{
+  "env": {
+    "node": true,
+    "es6": true,
+    "mocha": true
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2018,
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "indent": [
+      "error",
+      2
+    ],
+    "new-cap": "off",
+    "newline-after-var": "off",
+    "no-invalid-this": "off",
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "guard-for-in": "off",
+    "no-console": "off",
+    "no-undefined": "off",
+    "array-bracket-spacing": "off",
+    "no-unused-expressions": "off",
+    "linebreak-style": "off",
+    "func-style": [
+      "error",
+      "expression"
+    ],
+    "comma-dangle": [ "warn", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "never"
+    }],
+    "semi": "warn", // 警告不加分号
+    "no-const-assign": "warn",//禁止修改const声明的变量
+    "no-dupe-keys": "warn",//在创建对象字面量时不允许键重复 {a:1,a:1}
+    "no-dupe-args": "warn", //函数参数不能重复
+    "no-redeclare": "warn", //禁止重复声明变量
+    "no-undef": "warn" //不能有未定义的变量
+  },
+  "plugins": [
+    "react"
+  ],
+  "globals": {
+    "EASY_ENV_IS_PROD": true,
+    "EASY_ENV_IS_NODE": true,
+    "EASY_ENV_IS_BROWSER": true,
+    "EASY_ENV_IS_DEV": true
+  }
+}

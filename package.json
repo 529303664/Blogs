@@ -1,0 +1,29 @@
+{
+  "name": "blogs",
+  "version": "1.0.0",
+  "description": "My private blogs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "fix": "eslint --fix ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/529303664/Blogs.git"
+  },
+  "keywords": [
+    "blogs"
+  ],
+  "author": "Lucas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/529303664/Blogs/issues"
+  },
+  "homepage": "https://github.com/529303664/Blogs#readme",
+  "devDependencies": {
+    "eslint": "^7.15.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-vue": "^7.2.0"
+  }
+}

@@ -10,8 +10,9 @@
 
 #### 直接定义依赖
 
-```js
+``` js
 function a() {}
+
 function b() {}
 ```
 
@@ -19,20 +20,20 @@ function b() {}
 
 #### 闭包模块化
 
-```js
+``` js
 var modules = (fuction(my, $) {
-function privateMethod() {
-    // ...
-}
+    function privateMethod() {
+        // ...
+    }
 
-my.moduleProperty = 1;
-my.moduleMethod = function () {
-    //$()....
-    //privateMethod()...
-    // ...
-};
+    my.moduleProperty = 1;
+    my.moduleMethod = function() {
+        //$()....
+        //privateMethod()...
+        // ...
+    };
 
-return my;
+    return my;
 }(widnow.modules || {}, jQuery))
 ```
 
@@ -48,12 +49,12 @@ return my;
 
 从1999年开始，js模块化的探索都是基于语言层面上的优化，真正的改变要从2009年CommonJS的引入开始，Node采用CommonJS模块规范，每个文件就是一个模块，有自己的作用域，在一个文件里面定义的变量、函数、类都是私有了。
 
-```js
+``` js
 // package/lib is a dependency we require
 const lib = require('package/lib');
 
 // some behaviour for our module
-function foo(){
+function foo() {
     lib.log('hello world!');
 }
 
@@ -77,13 +78,13 @@ exports.foo = foo;
 
 由于篇幅有限，这里不讨论require的加载选择路径优先级的判断，也不讨论模块缓存的过程，并假定加载的文件都是js文件，主要实现代码如下[源代码](https://github.com/joyent/node/blob/master/lib/module.js)
 
-```js
+``` js
 function Module(id, parent) {
-    this.id = id;                         
+    this.id = id;
     this.expotrs = {};
     this.parent = parent;
     if (parent && parent.children) {
-      parent.children.push(this);
+        parent.children.push(this);
     }
     this.fileanme = null;
     this.loaded = false;
@@ -116,18 +117,18 @@ Module.prototype.load = function(filename) {
 
 // 模块编译
 Module.prototype._compile = function(content, filename) {
-  const self = this;
-  const args = [self.exports, require, self, filename, dirname];
-  // 在沙箱中执行代码
-  return compiledWrapper.apply(self.exports, args);
+    const self = this;
+    const args = [self.exports, require, self, filename, dirname];
+    // 在沙箱中执行代码
+    return compiledWrapper.apply(self.exports, args);
 }
 ```
 
 从代码中可以看出，模块加载实质上就是注入了exports，require，module三个全局变量，然后执行模块的源码，最后将模块的exports的变量输入
 
-```js
-(function (exports, require, module, __filename, __dirname) {
-  // 模块源码
+``` js
+(function(exports, require, module, __filename, __dirname) {
+    // 模块源码
 });
 ```
 
@@ -143,8 +144,8 @@ Module.prototype._compile = function(content, filename) {
 
 AMD，全称是Asynchronous Module Definition，即异步模块加载机制，它采用异步方式加载模块，模块的加载不影响后面语句的运行，AMD规范定义了一个**define**全局方法用来定义和加载模块
 
-```js
-define(id?, dependencies?, factory);
+``` js
+define(id ? , dependencies ? , factory);
 ```
 
 *   id: 模块标识，可以省略
@@ -153,7 +154,7 @@ define(id?, dependencies?, factory);
 
 AMD也使用了使用**require**全局方法来加载模块，但不同于CommonJS，它要求两个参数，dependences是需要前置的依赖，只有所有前置依赖都加载完了才会触发回调函数，dependences的加载是**通过动态创建sciprt和事件监听的方式来异步加载模块**，解决了CommonJS同步加载的问题。
 
-```js
+``` js
 require([dependence], callback);
 ```
 
@@ -161,13 +162,13 @@ require([dependence], callback);
 
 RequireJS 是 AMD 规范的代表之作，基本使用方式如下
 
-```js
-define(['./a','./b'], function (moduleA, moduleB) {
-  // 依赖前置
-  moduleA.mehodA();
-  console.log(moduleB.dataB);
-  // 导出数据
-  return {};
+``` js
+define(['./a', './b'], function(moduleA, moduleB) {
+    // 依赖前置
+    moduleA.mehodA();
+    console.log(moduleB.dataB);
+    // 导出数据
+    return {};
 });
 ```
 
@@ -177,11 +178,15 @@ define(['./a','./b'], function (moduleA, moduleB) {
 
 > 依赖的定义
 
-```js
+``` js
 // 缓存定义的模块
 const defMap = {}
 define = (name, deps, callback) => {
-    defMap[name] = { name, deps, callback }
+    defMap[name] = {
+        name,
+        deps,
+        callback
+    }
 }
 ```
 
@@ -189,7 +194,7 @@ define = (name, deps, callback) => {
 
 模块加载的时候会首先通过**Modules**构造函数创建一个模块实例，然后调用初始化**init**的方法传入需要加载的依赖跟回调函数
 
-```js
+``` js
 // 全局require方法
 req = require = (name, deps, callback) => {
     const mod = new Module(name)
@@ -221,7 +226,7 @@ class Modules {
 
 其中**enable**函数用来遍历依赖，并绑定回调函数**definedFn**
 
-```js
+``` js
 class Module {
     ...
     // 加载依赖
@@ -249,18 +254,18 @@ class Module {
 
 **loadModule**是源码的核心，通过动态创建scirpt异步加载依赖，加载完之后再循环加载子模块的依赖，直到全部依赖都加载完毕。
 
-```js
+``` js
 const loadModule = (name, url) => {
-   const head = document.getElementsByTagName('head')[0]
-   const node = document.createElement('script')
-   node.type = 'text/javascript'
-   node.async = true
-   // 设置一个 data 属性，便于依赖加载完毕后拿到模块名 
-   node.setAttribute('data-module', name)
-   node.addEventListener('load', onScriptLoad, false)
-   node.src = url
-   head.appendChild(node)
-   return node
+    const head = document.getElementsByTagName('head')[0]
+    const node = document.createElement('script')
+    node.type = 'text/javascript'
+    node.async = true
+    // 设置一个 data 属性，便于依赖加载完毕后拿到模块名 
+    node.setAttribute('data-module', name)
+    node.addEventListener('load', onScriptLoad, false)
+    node.src = url
+    head.appendChild(node)
+    return node
 }
 
 // 节点绑定的onload事件函数
@@ -280,7 +285,7 @@ const onScriptLoad = evt => {
 
 **check**函数检查依赖是否全部加载完毕了，加载完毕之后执行回调函数。
 
-```js
+``` js
 class Module {
     ...
     // 检查依赖是否加载完毕
@@ -304,7 +309,7 @@ class Module {
 
 相对于AMD的异步加载，CMD更倾向于懒加载，而且CMD的写法跟CommonJS极为相近，只需要在CommonJS外增加一个函数调用即可，如下
 
-```js
+``` js
 // CMD
 define(function(require, exports, module) {
     const $ = require('Jquery')
@@ -328,12 +333,12 @@ sea.js看起来像是很神奇，JS不是异步的吗？但怎么sea.js调用模
 
 UMD（Universal Module Definnition）通用模块定义模式，主要用来解决CommonJS模式和AMD模式代码不能在服务端跟Web端通用的问题，并同时还支持老式的全局变量规范。
 
-```js
-(function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() : 
-    typeof define === 'function' && define.amd ? define(factory) :
-    (global = global || self, global.myBundle = factory());
-}(this, (function () { 
+``` js
+(function(global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+        typeof define === 'function' && define.amd ? define(factory) :
+        (global = global || self, global.myBundle = factory());
+}(this, (function() {
     const main = () => {
         return 'hello world';
     };
@@ -356,7 +361,7 @@ UMD（Universal Module Definnition）通用模块定义模式，主要用来解�
 
 模块导出只有一个关键字**export**，可以直接导出变量，函数，或者通过大括号直接输出一组变量，更有独特的**default**可以用来直接导出默认值。
 
-```js
+``` js
 // moduleA
 // 直接导出某个变量跟函数
 export const name = 'chen'
@@ -366,10 +371,14 @@ export function getName() {
 
 // 可以通过大括号输出一组变量
 const anotherName = 'nomad'
-const function getAnotherName() {
+const
+function getAnotherName() {
     return 'nomad'
 }
-export { anotherName, getAnotherName }
+export {
+    anotherName,
+    getAnotherName
+}
 
 // 也可以直接导出默认值
 export default anotherName
@@ -377,8 +386,13 @@ export default anotherName
 
 模块导入可以通过**import**命令加载其他JS文件中**export**的变量，同样可以同时导入其他文件中的默认值**default**（如果存在）跟其他变量
 
-```js
-import defaultName, { name, getName, anotherName, getAnotherName } from './moduleA'
+``` js
+import defaultName, {
+    name,
+    getName,
+    anotherName,
+    getAnotherName
+} from './moduleA'
 ```
 
 具体语法包括导入变量的改名，导入并同时导出的复合写法等就不再赘述，具体可以查看网上的教程。
@@ -389,27 +403,30 @@ CommonJS模块的**require**是同步加载模块，而ESM 会对静态代码分
 
 CommonJS模块输入的是值拷贝（基础类型为复制，引用类型为值引用）
 
-```js
+``` js
 // CommonJS
 // ModuleA
 const obj = {
-  a: 1
+    a: 1
 }
 let b = 1
 setTimeout(() => {
-  obj.a++
-  b++
+    obj.a++
+    b++
 });
 exports.obj = obj;
 exports.b = b;
 
 // ModuleB
-const { obj, b } = require('./moduleA');
+const {
+    obj,
+    b
+} = require('./moduleA');
 console.log(`a: ${obj.a}`);
 console.log(`b: ${b}`);
 setTimeout(() => {
-  console.log(`a: ${obj.a}`);
-  console.log(`b: ${b}`);
+    console.log(`a: ${obj.a}`);
+    console.log(`b: ${b}`);
 }, 100);
 
 // result
@@ -421,26 +438,32 @@ setTimeout(() => {
 
 ESM模块是动态引用，变量不会被缓存，而是成为一个指向加载模块的引用，只有真正取值的时候才会进行计算取值
 
-```js
+``` js
 // ESM
 // moduleA
 const obj = {
-  a: 1
+    a: 1
 }
 let b = 1
 setTimeout(() => {
-  obj.a++
-  b++
+    obj.a++
+    b++
 });
-export { obj, b }
+export {
+    obj,
+    b
+}
 
 // moduleB
-import { obj, b } from './moduleA.mjs';
+import {
+    obj,
+    b
+} from './moduleA.mjs';
 console.log(`a: ${obj.a}`);
 console.log(`b: ${b}`);
 setTimeout(() => {
-  console.log(`a: ${obj.a}`);
-  console.log(`b: ${b}`);
+    console.log(`a: ${obj.a}`);
+    console.log(`b: ${b}`);
 }, 100);
 
 // result

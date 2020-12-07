@@ -1,10 +1,8 @@
-# 关于eslint使用规则，和各种报错应对书写规则
-
-## 为了方便查看和使用所以进行了整理，以下。
+### 为了方便查看和使用所以进行了整理，以下。
 
 > 0="off" 1="warn" 2="error"
 
-```eslint
+``` js
 "no-alert": 0,//禁止使用alert confirm prompt
 
 "no-array-constructor": 2,//禁止使用数组构造器

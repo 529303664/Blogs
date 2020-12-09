@@ -95,14 +95,38 @@ export function compress (base64, quality, mimeType) {
   });
 }
 
-export function dataUrlToBlob (base64, mimeType) {
-  let bytes = window.atob(base64.split(',')[1]);
-  let ab = new ArrayBuffer(bytes.length);
-  let ia = new Uint8Array(ab);
-  for (let i = 0; i < bytes.length; i++) {
-    ia[i] = bytes.charCodeAt(i);
+// export function dataUrlToBlob (base64, mimeType = 'image/jpeg') {
+//   let bytes = window.atob(base64.split(',')[1]);
+//   let ab = new ArrayBuffer(bytes.length);
+//   let ia = new Uint8Array(ab);
+//   for (let i = 0; i < bytes.length; i++) {
+//     ia[i] = bytes.charCodeAt(i);
+//   }
+//   return new Blob([ia], { type: mimeType });
+// }
+export function dataURLToBlob(dataurl, mine = 'image/jpeg') {
+  const arr = dataurl.split(',');
+  const mimeType = mine || arr[0].match(/:(.*?);/)[1];
+  const bstr = window.atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
   }
-  return new Blob([ia], { type: mimeType });
+  return new Blob([u8arr], { type: mimeType });
+}
+
+// DataURL转File对象
+export function dataURLtoFile(dataurl, filename, mine = 'image/jpeg') {
+  const arr = dataurl.split(',');
+  const mimeType = mine || arr[0].match(/:(.*?);/)[1];
+  const bstr = window.atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  while(n--){
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, {type:mimeType});
 }
 
 export function uploadFile (url, blob) {
@@ -131,3 +155,30 @@ export const loadFile = function (event) {
   reader.readAsDataURL(event.target.files[0]);
 };
 
+export function getGIFFirstFrame(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const img = new Image();
+      img.src = reader.result;
+      img.onload = () => {
+        // 开源插件：https://github.com/buzzfeed/libgif-js
+        const rub = new SuperGif({ gif: img });
+        rub.load(function () {
+          if (rub.get_length() === 0) {
+            return;
+          }
+          // 获取gif实例的首帧
+          rub.move_to(0);
+          // canvas生成base64图片数据
+          const dataurl = rub.get_canvas().toDataURL('image/jpeg', 0.8);
+          const filename = file.name.replace('.gif', '.jpg');
+          resolve(dataURLtoFile(dataurl, filename));
+          return;
+        });
+      };
+    };
+  });
+  
+}

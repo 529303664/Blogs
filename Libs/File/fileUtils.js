@@ -1,8 +1,6 @@
 /* eslint-disable func-style */
 
 const fs = require('fs');
-const path = require('path');
-const http = require('http');
 const request = require('request');
 // https://github.com/node-modules/urllib
 const httpClient = require('urllib');
@@ -10,7 +8,7 @@ const byline = require('byline');
 const logger = console;
 
 const toHump = name => {
-  return name.replace(/\_(\w)/g, function (all, letter) {
+  return name.replace(/\_(\w)/g, function(all, letter) {
     return letter.toUpperCase();
   });
 };
@@ -71,7 +69,7 @@ function downloadToLocal(url, filepath) {
   logger.info('[downloadToLocal url, filepath]', url, filepath);
   const file = fs.createWriteStream(filepath);
   return new Promise((resolve, reject) => {
-    let req = request.get(url); // 支持https http
+    const req = request.get(url); // 支持https http
     req.on('response', response => {
       if (response.statusCode !== 200) {
         return reject('file download fail Response status was ' + response.statusCode);
@@ -109,39 +107,39 @@ function downloadToLocal(url, filepath) {
  */
 function downloadFileAndResume(url, filepath, progressFun) {
   let receivedBytes = 0;
-  if(fs.existsSync(filepath)) {
+  if (fs.existsSync(filepath)) {
     const stats = fs.statSync(filepath);
     receivedBytes = stats.size;
   }
 
-  if(typeof progressFun !== 'function') {
+  if (typeof progressFun !== 'function') {
     progressFun = (progress, receivedBytes, totalBytes) => {};
   }
 
   // 发送请求，增加一个range头
   const opt = {
-    headers: { 'Range': `bytes=${receivedBytes}-` },
+    headers: { Range: `bytes=${receivedBytes}-` },
   };
 
   const file = fs.createWriteStream(filepath, {
     start: receivedBytes,
-    flags: receivedBytes > 0 ? 'a+':'w',
+    flags: receivedBytes > 0 ? 'a+' : 'w',
   });
 
   return new Promise((resolve, reject) => {
-    let req = request.get(url, opt); // 支持https http
+    const req = request.get(url, opt); // 支持https http
     let total = 0;
     console.log(`即将开始下载，URL: ${url}, 文件保存地址：${filepath}, 已下载：${receivedBytes} 字节`);
-    if(receivedBytes > 0) {
-      console.log(`已存在文件，开始从${receivedBytes+1}字节处下载`);
+    if (receivedBytes > 0) {
+      console.log(`已存在文件，开始从${receivedBytes + 1}字节处下载`);
     }
     const finish = () => {
       file && file.close();
-      resolve({ receivedBytes: receivedBytes, total: total });
+      resolve({ receivedBytes, total });
     };
     req.on('response', response => {
       total = parseInt(response.headers['content-length'], 10) + receivedBytes;
-      if(response.statusCode === 416) {
+      if (response.statusCode === 416) {
         return finish();
       } else if (response.statusCode !== 206 && response.statusCode !== 200) {
         return reject('file download fail Response status was ' + response.statusCode);
@@ -156,7 +154,7 @@ function downloadFileAndResume(url, filepath, progressFun) {
       }
       reject('file download fail ' + e.message);
     });
-    req.on('data', function (chunk) {
+    req.on('data', function(chunk) {
       receivedBytes += chunk.length;
       progressFun(Math.floor(receivedBytes * 100 / total) / 100, receivedBytes, total);
     });
@@ -217,7 +215,7 @@ function readByLine(filepath, callback, NUM_PER_TIME = 400) {
     str.setEncoding('utf8');
     str = byline.createStream(str);
 
-    str.on('data', async function (line) {
+    str.on('data', async function(line) {
       // Pause until we're done processing this line.
       line = line.trim();
       i++;
@@ -235,12 +233,12 @@ function readByLine(filepath, callback, NUM_PER_TIME = 400) {
       }
     });
 
-    str.on('error', (e) => {
+    str.on('error', e => {
       logger.info('[readByLine error]', e);
       reject(e);
     });
 
-    str.on('end', async function () {
+    str.on('end', async function() {
       logger.info('[readByLine end]');
       // 结束时，还会有一定的剩余没有在上面的if逻辑中，余下的在这里插入
       if (callback) {
@@ -260,11 +258,11 @@ function readByLine(filepath, callback, NUM_PER_TIME = 400) {
  * @param {Boolean} supportResume 是否开启断点续传
  * @param {Function} progressFun 仅supportResume=true支持, 下载时的进度函数 (progress, receivedBytes, totalBytes) => {}
  */
-function readByLineFromUrl(url, localFilePath, callback, NUM_PER_TIME = 400, supportResume=false, progressFun) {
+function readByLineFromUrl(url, localFilePath, callback, NUM_PER_TIME = 400, supportResume = false, progressFun) {
   return new Promise(async (resolve, reject) => {
-    if(supportResume) {
+    if (supportResume) {
       await downloadFileAndResume(url, localFilePath, progressFun);
-    }else {
+    } else {
       await downloadToLocal(url, localFilePath);
     }
     await readByLine(localFilePath, callback, NUM_PER_TIME);

@@ -29,7 +29,7 @@ class Toast {
       // wordBreak: 'break-all'
     };
 
-    Object.keys(styleObject).forEach((key) => {
+    Object.keys(styleObject).forEach(key => {
       dom.style[key] = styleObject[key];
     });
 

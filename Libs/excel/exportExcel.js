@@ -13,12 +13,12 @@ export const downloadBlob = (blob, name) => {
 
 /**
  * 从table数据导出Excel
- * @param {*} table 
- * @param {*} header 
- * @param {*} name 
- * @param {*} sheetname 
+ * @param {*} table
+ * @param {*} header
+ * @param {*} name
+ * @param {*} sheetname
  */
-export const exportTable = (table, header, name, sheetname='file')  => {
+export const exportTable = (table, header, name, sheetname = 'file') => {
   const workbook = XLSX.utils.book_new();
   const ws = XLSX.utils.json_to_sheet(table, {
     header,
@@ -33,7 +33,7 @@ export const exportTable = (table, header, name, sheetname='file')  => {
 };
 
 const chars = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-const numberToExcelHeader = (index) => {
+const numberToExcelHeader = index => {
   index -= 1;
   const quotient = Math.floor(index / 26);
   if (quotient > 0) {
@@ -49,11 +49,12 @@ const numberToExcelHeader = (index) => {
  * @param {string} columns[].title - The Column Title.
  * @param {string} columns[].dataKey - The Column data key in dataSource[].item.
  * @param {String} name - The file name of export Excel.
+ * @param {String} sheetname - The export sheetname
  */
 export const exportExcel = (dataSource, columns, name, sheetname) => {
-  const table=[];
+  const table = [];
   console.info(columns);
-  const excelHeaders = columns.map((_, i) => numberToExcelHeader(i+1));
+  const excelHeaders = columns.map((_, i) => numberToExcelHeader(i + 1));
 
   const headerRow = columns.reduce((hRow, col, i) => {
     hRow[excelHeaders[i]] = col.title || col.dataKey;
@@ -63,7 +64,7 @@ export const exportExcel = (dataSource, columns, name, sheetname) => {
   table.push(headerRow);
   console.log('excel sheet header', headerRow);
 
-  dataSource.forEach((item) => {
+  dataSource.forEach(item => {
     const dataRow = columns.reduce((dRow, col, i) => {
       dRow[excelHeaders[i]] = item[col.dataKey];
       return dRow;

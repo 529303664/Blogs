@@ -1,4 +1,3 @@
-'use strict';
 
 
 const Redis = require('ioredis');
@@ -15,7 +14,7 @@ const LOCAL_CONFIG = {
 };
 
 // 缓存数据库连接
-let redisMap = {};
+const redisMap = {};
 
 function getConfig(redisName) {
   let config;
@@ -27,7 +26,7 @@ function getConfig(redisName) {
 }
 
 function connect(redisName) {
-  if(redisMap[redisName]) return redisMap[redisName];
+  if (redisMap[redisName]) return redisMap[redisName];
 
   const config = getConfig(redisName);
   const instance = new Redis(config);
@@ -40,7 +39,7 @@ function connect(redisName) {
 
 function close(redisName) {
   const redis = redisMap[redisName];
-  if(!redis) return false;
+  if (!redis) return false;
   redis && redis.quit();
   delete redisMap[redisName];
   return true;

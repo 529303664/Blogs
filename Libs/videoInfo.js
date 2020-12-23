@@ -1,16 +1,17 @@
 export function videoInfo(url) {
   return new Promise(async resolve => {
-    let info = { w: 0, h: 0, bg: '', bgSize: 0};
+    const info = { w: 0, h: 0, bg: '', bgSize: 0 };
     const Vobject = document.createElement('VIDEO');
     Vobject.setAttribute('controls', 'controls');
     Vobject.setAttribute('src', url);
     Vobject.setAttribute('style', 'display: none;');
-    Vobject.addEventListener('loadedmetadata', async function () {
+    Vobject.addEventListener('loadedmetadata', async function() {
 
       info.w = this.videoWidth;
       info.h = this.videoHeight;
       info.duration = this.duration;
-      let canvas, ctx;
+      let canvas,
+        ctx;
 
       if (this.videoWidth && this.videoHeight) {
         canvas = document.createElement('canvas');
@@ -22,11 +23,11 @@ export function videoInfo(url) {
         info.bg = canvas.toDataURL('image/jpeg');
 
         info.blob = await new Promise(resolve => {
-          canvas.toBlob((blob) => {
+          canvas.toBlob(blob => {
             resolve(blob);
           });
         });
-        
+
       }
 
       document.body.appendChild(Vobject);

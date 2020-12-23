@@ -3,7 +3,7 @@
  * @param {String} text 文案
  * @deprecated 即将废弃
  */
-export function copyToClipboardByexecCommand(text) {
+export function copyToClipboardByCxecCommand(text) {
   const textarea = document.createElement('input');// 创建input元素
   const currentFocus = document.activeElement;// 当前获得焦点的元素，保存一下
   document.body.appendChild(textarea);// 添加元素
@@ -166,7 +166,7 @@ export async function writeDataToClipboardWithPermission(blobs) {
 async function testWriteDataToClipboard() {
   const text = createTextBlob('hello，我是Lucas');
   const image = createImageBlob('http://cdn.semlinker.com/abao.png');
-  const result = await writeDataToClipboard([ text, image ]);
+  const result = await writeDataToClipboardWithPermission([ text, image ]);
   return result;
 }
 

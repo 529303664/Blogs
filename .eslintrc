@@ -38,6 +38,7 @@
       "functions": "never"
     }],
     "semi": "warn", // 警告不加分号
+    "no-unused-vars": "warn",
     "no-const-assign": "warn",//禁止修改const声明的变量
     "no-dupe-keys": "warn",//在创建对象字面量时不允许键重复 {a:1,a:1}
     "no-dupe-args": "warn", //函数参数不能重复

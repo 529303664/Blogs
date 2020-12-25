@@ -24,13 +24,13 @@ awk [options] 'scripts' var=value filename
 awk 'BEGIN{ print "start" } pattern{ commands } END{ print "end" }' filename
 ```
 
-一个awk脚本通常由BEGIN语句+模式匹配+END语句三部分组成,这三部分都是可选项.
+一个awk脚本通常由BEGIN语句+模式匹配+END语句三部分组成, 这三部分都是可选项.
 
 工作原理:
 
-- 第一步执行BEGIN 语句
-- 第二步从文件或标准输入读取一行，然后再执行pattern语句，逐行扫描文件到文件全部被读取
-- 第三步执行END语句
+* 第一步执行BEGIN 语句
+* 第二步从文件或标准输入读取一行，然后再执行pattern语句，逐行扫描文件到文件全部被读取
+* 第三步执行END语句
 
 实例展示:
 
@@ -54,6 +54,7 @@ mgg is mingg or mingongge
 ## Awk的变量
 
 ### 内置变量
+
 ``` BASH
 $0   #当前记录
 $1~$n #当前记录的第N个字段
@@ -77,6 +78,7 @@ ORS  #输出记录分割符，默认换行符
 ## Awk运算与判断
 
 ### 算术运算符
+
 ``` BASH
 + - 加减
 * / & 乘 除 求余

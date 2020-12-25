@@ -23,3 +23,24 @@
 4.  再次执行git log命令，查看已提交记录，之前红色圈出的commit记录已被删除。
 
 ![](./git回滚操作-04.png)
+
+### PS：以上方法不适用特定merge提交删除
+
+## 优雅撤销中间某次merge提交
+
+``` BASH
+git revert commit_id
+//如果commit_id是merge节点的话,-m是指定具体哪个提交点
+git revert commit_id -m 1
+//接着就是解决冲突
+git add -A
+git commit -m ".."
+git revert commit_id -m 2
+//接着就是解决冲突
+git add -A
+git commit -m ".."
+git push
+```
+
+其中`git revert commit_id -m 数字`是针对，`merge`提交点的操作。
+如果是普通的提交点，直接用rebase即可，不需要这么麻烦。

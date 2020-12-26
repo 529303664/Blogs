@@ -1,0 +1,40 @@
+variables:
+  PROJECT_NAME: "项目名"
+  GIT_REP: "git带token地址"
+  GIT_BRANCH_NAME: "拉取的代码分支名"
+  GIT_USER_NAME: "git user name"
+  GIT_USER_EMAIL: "email"
+  GIT_CONFIG_NAME: "push.default"
+  GIT_CONFIG_VALUE: "simple"
+
+stages:
+  - build
+
+build:
+  stage: build
+  tags:
+    - shell
+  only:
+    - master
+  script:
+    # 拉取最新的node_modules模块
+    - pwd
+    - mv /data1/webapps/$PROJECT_NAME/node_modules ./
+    - npm run zip
+    - mv node_modules /data1/webapps/$PROJECT_NAME/node_modules
+    - echo "成功构建"
+    - git clone -b $GIT_BRANCH_NAME $GIT_REP
+    - cd $PROJECT_NAME/
+    # 设置此项目git访问用户
+    - git config user.name $GIT_USER_NAME
+    - git config user.email $GIT_USER_EMAIL
+    # 设置全局配置相关信息
+    - git config --global $GIT_CONFIG_NAME $GIT_CONFIG_VALUE
+    - cp -rf ../dist/dist/* ./
+    - rm -rf node_modules
+    - mv /data1/webapps/$PROJECT_NAME/dist/node_modules .
+    - git add .
+    - git commit -am "git ci push" -q
+    - git push --set-upstream origin $GIT_BRANCH_NAME
+    - mv node_modules /data1/webapps/$PROJECT_NAME/dist                            
+    - echo "git prod 构建分支推送成功"

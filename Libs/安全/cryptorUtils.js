@@ -1,7 +1,9 @@
 
 
 const crypto = require('crypto');
-const { chr, str_repeat } = require('../string/stringUtils');
+const { chr, str_repeat } = require('locutus/php/strings');
+const { serialize, unserialize } = require('locutus/php/var');
+const key = '1RXD5WYw5wrdHR9y';
 
 const md5 = key => {
   console.info('key', key);
@@ -10,11 +12,15 @@ const md5 = key => {
   return md5sum.digest('hex');
 };
 const opensslEncrypt = (data, key) => {
-  data = JSON.stringify(data);
+  if (!key || key === undefined || typeof key !== 'string') {
+    throw new Error('key 不能为空');
+  }
+  if (key.length < 32) { // cbc算法 key长度要求32位
+    key += str_repeat(chr('\\000'), 32 - key.length);
+  }
+  data = serialize(data);
   const iv = Buffer.from('fdakinel;injajdji'.slice(0, 16)).toString('base64');
-
-  const algorithm = 'aes-256-cbc';
-  const cipher = crypto.createCipheriv(algorithm, key, Buffer.from(iv, 'base64').toString());
+  const cipher = crypto.createCipheriv('aes-256-cbc', key, Buffer.from(iv, 'base64').toString());
   let encryptedText = cipher.update(data, 'utf8', 'base64');
   encryptedText += cipher.final('base64');
   const params = {
@@ -25,13 +31,18 @@ const opensslEncrypt = (data, key) => {
 };
 
 const opensslDecrypt = (encrypt, key) => {
+  if (!key || key === undefined || typeof key !== 'string') {
+    throw new Error('key 不能为空');
+  }
+  if (key.length < 32) {
+    key += str_repeat(chr('\\000'), 32 - key.length);
+  }
   encrypt = JSON.parse(Buffer.from(encrypt, 'base64'));
   const iv = Buffer.from(encrypt.iv, 'base64');
-  const algorithm = 'aes-256-cbc';
-  const decipher = crypto.createDecipheriv(algorithm, key, iv);
+  const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
   let data = decipher.update(encrypt.value, 'base64', 'utf8');
   data += decipher.final('utf8');
-  return JSON.parse(data);
+  return unserialize(data);
 };
 
 const deepLinkEncrypt = text => {

@@ -128,4 +128,4 @@ PRPL 的很大一部分理念是对 JS 打包思维的颠覆，并在提供资�
 
 自 2016 年诞生以来，PRPL 模式已获得了大规模使用，值得你在优化应用加载时考虑。
 
-原文链接：[](https://addyosmani.com/blog/the-prpl-pattern/)
+原文链接：[https://addyosmani.com/blog/the-prpl-pattern/](https://addyosmani.com/blog/the-prpl-pattern/)

@@ -40,7 +40,7 @@ abc.com/order/details.html 转发到 订单服务 localhost:8090/details.html
 
 即，url的前缀对下游的服务是不需要的，除非下游服务添加context-path, 但很多时候我们并不喜欢加这个。如果Nginx转发的时候，把这个前缀去掉就好了。
 
-### 一个种方案是proxy_pass后面加根路径`/`.
+### 一个种方案是proxy_pass后面加根路径 `/` .
 
 ``` nginx
 server {
@@ -69,9 +69,9 @@ server {
 }
 ```
 
-`^~/user/`表示匹配前缀是`user`的请求，proxy_pass的结尾有/， 则会把`/user/*`后面的路径直接拼接到后面，即移除user.
+`^~/user/` 表示匹配前缀是 `user` 的请求，proxy_pass的结尾有/， 则会把 `/user/*` 后面的路径直接拼接到后面，即移除user.
 
-### 另一种方案是使用`rewrite`
+### 另一种方案是使用 `rewrite`
 
 ``` nginx
 upstream user {
@@ -80,7 +80,6 @@ upstream user {
 upstream order {
   server localhost:8090 weight=5;
 }
-
 
 server {
     listen              80;
@@ -110,7 +109,7 @@ server {
 }
 ```
 
-注意到proxy_pass结尾没有`/`, `rewrite`重写了url。
+注意到proxy_pass结尾没有 `/` , `rewrite` 重写了url。
 
 关于rewrite
 

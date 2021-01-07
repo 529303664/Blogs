@@ -2,7 +2,7 @@
 
 easywebpack配置svg-sprite-loader的配置：
 
-### 第一步
+### 配置
 >去除默认svg处理，并添加svg-sprite-loader配置
 ``` JS
 loaders: {
